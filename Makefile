@@ -23,33 +23,36 @@ OBJ_SERVER = $(SRC:%.c=%.o)
 OBJ_CLIENT_BONUS= $(SRC:%.c=%.o)
 OBJ_SERVER_BONUS = $(SRC:%.c=%.o)
 
+LIBFTPRINTF = libftprintf.a
 LIBFTPRINTF_DIR = libftprintf
 
 FLAGS = -Wall -Wextra -Werror
+INC = -I. -I$(LIBFTPRINTF_DIR)
 
-all: $(NAME) $(SERVERNAME)
+all: $(LIBFTPRINTF) $(NAME) $(SERVERNAME)
 
 $(LIBFTPRINTF): 
-	$(MAKE) -C libftprintf
-	
-$(NAME): $(OBJ_CLIENT)
-	$(MAKE) -C libftprintf
-	@cc $(NAME) $(FLAGS) $(OBJ_CLIENT) libftprintf/libftprintf.a -o 
+	$(MAKE) -C $(LIBFTPRINTF_DIR)
 
-$(SERVERNAME): $(OBJ_SERVER)
-	$(MAKE) -C libftprintf
-	@cc $(FLAGS) $(OBJ_SERVER) libftprintf/libftprintf.a -o $(SERVERNAME)
+	
+$(NAME): $(OBJ_CLIENT) 
+	@cc $(INC) -o $(NAME) $(OBJ_CLIENT) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF)
+
+$(SERVERNAME): $(OBJ_SERVER) 
+	@cc $(INC) -c -o $(SERVERNAME) $(OBJ_SERVER) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF)
 
 %.o: %.c
-	@cc $(FLAGS) -c -o $@ $^
+	@cc -c $(FLAGS) -o $@ $^
 
 clean:
-	$(MAKE) clean -C libftprintf
-	@rm -f $(OBJ_CLIENT) $(OBJ_SERVER)
+	$(MAKE) clean -C $(LIBFTPRINTF_DIR)
+	@rm -f $(OBJ_CLIENT)
+	@rm -f $(OBJ_SERVER)
 
 fclean: clean
-	$(MAKE) fclean -C libftprintf
-	@rm -f $(NAME) $(SERVERNAME)
+	$(MAKE) fclean -C $(LIBFTPRINTF_DIR)
+	@rm -f $(NAME)
+	@rm -f $(SERVERNAME)
 
 re: fclean all
 
