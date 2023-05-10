@@ -18,10 +18,10 @@ SRC_SERVER = server.c
 SRC_CLIENT_BONUS = client_bonus.c
 SRC_SERVER_BONUS = server_bonus.c
 
-OBJ_CLIENT = $(SRC:%.c=%.o)
-OBJ_SERVER = $(SRC:%.c=%.o)
-OBJ_CLIENT_BONUS= $(SRC:%.c=%.o)
-OBJ_SERVER_BONUS = $(SRC:%.c=%.o)
+OBJ_CLIENT = $(SRC_CLIENT:%.c=%.o)
+OBJ_SERVER = $(SRC_SERVER:%.c=%.o)
+OBJ_CLIENT_BONUS= $(SRC_CLIENT_BONUS:%.c=%.o)
+OBJ_SERVER_BONUS = $(SRC_SERVER_BONUS:%.c=%.o)
 
 LIBFTPRINTF = libftprintf.a
 LIBFTPRINTF_DIR = libftprintf
@@ -33,16 +33,15 @@ all: $(LIBFTPRINTF) $(NAME) $(SERVERNAME)
 
 $(LIBFTPRINTF): 
 	$(MAKE) -C $(LIBFTPRINTF_DIR)
-
 	
 $(NAME): $(OBJ_CLIENT) 
-	@cc $(INC) -o $(NAME) $(OBJ_CLIENT) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF)
+	@cc $(OBJ_CLIENT) $(INC) -o $(NAME) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF)
 
 $(SERVERNAME): $(OBJ_SERVER) 
-	@cc $(INC) -c -o $(SERVERNAME) $(OBJ_SERVER) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF)
+	@cc $(OBJ_SERVER) $(INC) -o $(SERVERNAME) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF)
 
 %.o: %.c
-	@cc -c $(FLAGS) -o $@ $^
+	@cc -c $(FLAGS) $^
 
 clean:
 	$(MAKE) clean -C $(LIBFTPRINTF_DIR)
