@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/20 22:00:25 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/20 22:25:47 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int ac, char** av)
 
 	serverPid = ft_atoi(av[1]);
 	message = av[2];
-	kill(serverPid, SIGUSR2);
+	kill(serverPid, SIGUSR1);
 	signal(SIGUSR1, sig_handler);
 	pause();
 	return (0);
