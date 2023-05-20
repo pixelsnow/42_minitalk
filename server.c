@@ -17,26 +17,34 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 	static int	receiver = 0;
 	static int	i = 0;
 
-	if (i < 32)
+	if (i < 31)
 	{
-		ft_printf("%i\n", receiver);
+		
 		if (signo == SIGUSR2)
 		{
-			receiver = receiver | 1;
+			ft_printf("1\n");
+			receiver = receiver | (1 << 30);
 		}
 		else
 		{
-			receiver = receiver | 0;
+			ft_printf("0\n");
 		}
-		receiver = receiver << 1;
-		i++;
-	}
-	(void)context;
-	if (i == 32)
+		ft_printf("%ith bit - receiver: %i\n", i, receiver);
+		if (i == 30)
 		{
 			ft_printf("RESULT: %i\n", receiver);
 			kill(info->si_pid, SIGUSR1);
 		}
+		else
+			receiver = receiver >> 1;
+		i++;
+	}
+	(void)context;
+	/* if (i == 32)
+		{
+			ft_printf("RESULT: %i\n", receiver);
+			kill(info->si_pid, SIGUSR1);
+		} */
 }
 
 int	main(void)

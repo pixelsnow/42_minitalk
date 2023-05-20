@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include <limits.h>
 
 static void signal_handler(int signum)
 {
 	if (signum)
 		ft_printf("Message received!\n");
+	
 }
 
 static int input_invalid(int ac, char** av)
@@ -30,13 +32,19 @@ static int send_len(int server_pid, int len)
 	int	i;
 
 	i = 0;
+	//len = INT_MAX;
 	while (i < 32)
 	{
-		ft_printf("len: %i\n", len);
+		//ft_printf("len: %i\n", len);
 		if (len & 1)
+		{
+
 			kill(server_pid, SIGUSR2);
+		}
 		else
+		{
 			kill(server_pid, SIGUSR1);
+		}
 		len = len >> 1;
 		usleep(DELAY);
 		i++;
@@ -50,6 +58,10 @@ int main(int ac, char** av)
 	char*	message;
 	int		len;
 
+	ft_printf("31: %i\n", 1 << 31);
+	ft_printf("30: %i\n", 1 << 30);
+	ft_printf("29: %i\n", 1 << 29);
+	ft_printf("1: %i\n", 1 << 1);
 	if (input_invalid(ac, av))
 	{
 		ft_printf("Please provide server process id and your message\n");
@@ -67,6 +79,7 @@ int main(int ac, char** av)
 	send_len(server_pid, len);
 	//kill(server_pid, SIGUSR1);
 	pause();
+	ft_printf("pause\n");
 	return (0);
 }
 
