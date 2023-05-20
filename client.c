@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/20 22:52:23 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:20:57 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,29 @@ static void signal_handler(int signum)
 		ft_printf("Message received!\n");
 }
 
-int input_invalid(int ac, char** av)
+static int input_invalid(int ac, char** av)
 {
-	if (ac != 3 || !av || !av[0] || !av[1] || av[2])
+	if (ac != 3 || !av || !av[0] || !av[1] || !av[2])
 		return (1);
+	return (0);
+}
+
+static int send_len(int server_pid, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < 32)
+	{
+		ft_printf("len: %i\n", len);
+		if (len & 0x01)
+			kill(server_pid, SIGUSR2);
+		else
+			kill(server_pid, SIGUSR1);
+		len = len >> 1;
+		usleep(DELAY);
+		i++;
+	}
 	return (0);
 }
 
@@ -29,6 +48,7 @@ int main(int ac, char** av)
 {
 	int		server_pid;
 	char*	message;
+	int		len;
 
 	if (input_invalid(ac, av))
 	{
@@ -42,8 +62,10 @@ int main(int ac, char** av)
 		return (1);
 	}
 	message = av[2];
-	kill(server_pid, SIGUSR1);
+	len = ft_strlen(message);
 	signal(SIGUSR1, signal_handler);
+	send_len(server_pid, len);
+	//kill(server_pid, SIGUSR1);
 	pause();
 	return (0);
 }
