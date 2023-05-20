@@ -6,17 +6,38 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/20 17:28:40 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/20 22:00:25 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int main(void)
+static void sig_handler(int signum)
 {
-	int pid;
-
-	pid = getpid();
-	ft_printf("Client process id is: %i", pid);
-	return 0;
+	ft_printf("confirmation %i\n", signum);
 }
+
+int main(int ac, char** av)
+{
+	int		pid;
+	int		serverPid;
+	char*	message;
+
+	if (ac != 3)
+	{
+		ft_printf("Please provide server process id and your message\n");
+		return (1);
+	}
+		
+	pid = getpid();
+	ft_printf("Client process id is: %i\n", pid);
+
+	serverPid = ft_atoi(av[1]);
+	message = av[2];
+	kill(serverPid, SIGUSR2);
+	signal(SIGUSR1, sig_handler);
+	pause();
+	return (0);
+}
+
+//usleep(100);

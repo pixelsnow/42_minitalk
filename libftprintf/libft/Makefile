@@ -6,7 +6,7 @@
 #    By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/04 20:11:58 by vvagapov          #+#    #+#              #
-#    Updated: 2022/12/19 22:47:15 by vvagapov         ###   ########.fr        #
+#    Updated: 2023/05/20 18:21:48 by vvagapov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,3 +87,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re bonus
+
+.SILENT:
