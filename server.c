@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:18:18 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/20 23:16:01 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:45:46 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,29 @@
 
 static void    signal_handler(int signo, siginfo_t *info, void *context)
 {
-	//static int	receiver = 0;
+	static int	receiver = 0;
+	static int	i = 0;
 
-	if (signo == SIGUSR1)
-		ft_printf("0\n");
-	else if (signo == SIGUSR2)
-		ft_printf("1\n");
+	if (i < 32)
+	{
+		ft_printf("%i\n", receiver);
+		if (signo == SIGUSR2)
+		{
+			receiver = receiver | 1;
+		}
+		else
+		{
+			receiver = receiver | 0;
+		}
+		receiver = receiver << 1;
+		i++;
+	}
 	(void)context;
-	kill(info->si_pid, SIGUSR1);
+	if (i == 32)
+		{
+			ft_printf("RESULT: %i\n", receiver);
+			kill(info->si_pid, SIGUSR1);
+		}
 }
 
 int	main(void)

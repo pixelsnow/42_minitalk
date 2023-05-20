@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/20 23:20:57 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:46:48 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int send_len(int server_pid, int len)
 	while (i < 32)
 	{
 		ft_printf("len: %i\n", len);
-		if (len & 0x01)
+		if (len & 1)
 			kill(server_pid, SIGUSR2);
 		else
 			kill(server_pid, SIGUSR1);
