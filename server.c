@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:18:18 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/06 23:44:06 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:35:52 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int main(void)
 {
-	write(1, "server", 6);
+	int pid;
+
+	pid = getpid();
+	ft_printf("Server process id is: %i", pid);
+	
 	return 0;
 }

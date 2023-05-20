@@ -6,7 +6,7 @@
 #    By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/23 16:28:38 by vvagapov          #+#    #+#              #
-#    Updated: 2022/12/23 21:31:10 by vvagapov         ###   ########.fr        #
+#    Updated: 2023/05/20 17:31:33 by vvagapov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,3 +53,5 @@ testclean: fclean
 	@rm -f a.out
 
 .PHONY: all clean fclean re test testclean
+
+.SILENT:
