@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:18:18 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 16:40:09 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:48:56 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 	static int	i = 0;
 	static char	*res;
 
-	ft_printf("i = %i\n", i);
+	
 	if (i < 31)
 	{
 		len = len >> 1;
@@ -40,11 +40,12 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 	//ft_printf("checking if 31 < %i <= %i\n", i, len * 8 + 32);
 	else if (i > 31 && i <= len * 8 + 32)
 	{
-		ft_printf("res[%i] |= %i\n", (i - 32) / 8, res[(i - 32) / 8 - 1] | (1 << (7 - (i - 32) % 8)));
 		if (signo == SIGUSR2)
 		{
 			ft_printf("1 to %ith bit of %ith char\n", (i - 32) % 8, (i - 32) / 8);
 			res[(i - 32) / 8] |= (1 << (7 - (i - 32) % 8));
+			ft_printf("res[%i] |= %i\n", (i - 32) / 8, res[(i - 32) / 8 - 1] | (1 << (7 - (i - 32) % 8)));
+			ft_printf("res[%i]: %i\n",(i - 32) / 8, res[(i - 32) / 8]);
 		}
 		else
 		{
@@ -52,11 +53,14 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 		}
 		i++;
 	}
-	ft_printf("MSG: %s\n", res);
-	if (i == len * 8 + 33)
+	if (i == len * 8 + 32)
 	{
 		ft_printf("MSG: %s\n", res);
+		free(res);
+		res = NULL;
+		len = 0;
 		kill(info->si_pid, SIGUSR1);
+		i = 0;
 	}
 	(void)context;
 }

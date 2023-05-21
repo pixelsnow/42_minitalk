@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:06:37 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/20 23:03:22 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:45:25 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 # include <signal.h>
 # include "libftprintf/ft_printf.h"
 
-# define DELAY 100
+# define DELAY 300
 
 #endif
