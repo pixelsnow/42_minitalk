@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:18:18 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 17:43:00 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:26:05 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char *malloc_message(int len)
 	char *res;
 	
 	res = (char *)malloc((len + 1) * sizeof(char));
+	ft_bzero(res, len);
 	if (!res)
 		return NULL;
 	res[len] = '\0';
@@ -64,7 +65,7 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	int 				pid;
+	pid_t 				pid;
 	struct sigaction	action;
 
 	pid = getpid();

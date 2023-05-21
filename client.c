@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 17:49:08 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:29:55 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void signal_handler(int signum)
 
 static int input_invalid(int ac, char** av)
 {
-	if (ac != 3 || !av || !av[0] || !av[1] || !av[2])
+	if (ac != 3)
 		return (1);
 	return (0);
 }
 
-static int send_len(int server_pid, int len)
+static int send_len(pid_t server_pid, int len)
 {
 	int	i;
 
@@ -33,13 +33,9 @@ static int send_len(int server_pid, int len)
 	while (i < 32)
 	{
 		if (len & 1)
-		{
 			kill(server_pid, SIGUSR2);
-		}
 		else
-		{
 			kill(server_pid, SIGUSR1);
-		}
 		len = len >> 1;
 		usleep(DELAY);
 		i++;
@@ -47,7 +43,7 @@ static int send_len(int server_pid, int len)
 	return (0);
 }
 
-static int send_msg(int server_pid, char *msg)
+static int send_msg(pid_t server_pid, char *msg)
 {
 	int	i;
 	int	j;
@@ -72,8 +68,8 @@ static int send_msg(int server_pid, char *msg)
 
 int main(int ac, char** av)
 {
-	int		server_pid;
-	char*	message;
+	pid_t	server_pid;
+	char	*message;
 	int		len;
 
 	if (input_invalid(ac, av))
@@ -92,8 +88,6 @@ int main(int ac, char** av)
 	signal(SIGUSR1, signal_handler);
 	send_len(server_pid, len);
 	send_msg(server_pid, message);
-	//ft_printf("pause1\n");
 	pause();
-	//ft_printf("pause2\n");
 	return (0);
 }
