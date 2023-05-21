@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 15:14:32 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:24:20 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int send_len(int server_pid, int len)
 	int	i;
 
 	i = 0;
-	len = INT_MAX;
-	while (i < 31)
+	//len = INT_MAX;
+	while (i < 32)
 	{
 		//ft_printf("len: %i\n", len);
 		if (len & 1)
@@ -51,14 +51,44 @@ static int send_len(int server_pid, int len)
 	return (0);
 }
 
+static int send_msg(int server_pid, char *msg)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (msg[i])
+	{
+		ft_printf("Sending %ith char: %i\n", i, msg[i]);
+		j = 7;
+		while (j >= 0)
+		{
+			if (msg[i] & (1 << j))
+			{
+				ft_printf("1 for %ith bit\n", j);
+				kill(server_pid, SIGUSR2);
+			}
+			else
+			{
+				ft_printf("0 for %ith bit\n", j);
+				kill(server_pid, SIGUSR1);
+			}
+			j--;
+			usleep(DELAY);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int main(int ac, char** av)
 {
 	int		server_pid;
 	char*	message;
 	int		len;
 
-	ft_printf("31: %i\n", 1 << 31);
-	ft_printf("30: %i\n", 1 << 30);
+	//ft_printf("31: %i\n", 1 << 31);
+	//ft_printf("30: %i\n", 1 << 30);
 	if (input_invalid(ac, av))
 	{
 		ft_printf("Please provide server process id and your message\n");
@@ -74,6 +104,7 @@ int main(int ac, char** av)
 	len = ft_strlen(message);
 	signal(SIGUSR1, signal_handler);
 	send_len(server_pid, len);
+	send_msg(server_pid, message);
 	//kill(server_pid, SIGUSR1);
 	//ft_printf("pause1\n");
 	//pause();
