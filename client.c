@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 17:43:00 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:49:08 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static int send_msg(int server_pid, char *msg)
 		j = 7;
 		while (j >= 0)
 		{
+			usleep(DELAY);
 			if (msg[i] & (1 << j))
 				kill(server_pid, SIGUSR2);
 			else
 				kill(server_pid, SIGUSR1);
 			j--;
-			usleep(DELAY);
 		}
 		i++;
 	}
@@ -93,7 +93,7 @@ int main(int ac, char** av)
 	send_len(server_pid, len);
 	send_msg(server_pid, message);
 	//ft_printf("pause1\n");
-	//pause();
+	pause();
 	//ft_printf("pause2\n");
 	return (0);
 }
