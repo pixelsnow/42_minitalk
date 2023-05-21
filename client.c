@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 18:29:55 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:46:23 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void signal_handler(int signum)
 		ft_printf("Message received!\n");
 }
 
-static int input_invalid(int ac, char** av)
+static int input_invalid(int ac)
 {
 	if (ac != 3)
 		return (1);
@@ -72,7 +72,7 @@ int main(int ac, char** av)
 	char	*message;
 	int		len;
 
-	if (input_invalid(ac, av))
+	if (input_invalid(ac))
 	{
 		ft_printf("Please provide server process id and your message\n");
 		return (1);
