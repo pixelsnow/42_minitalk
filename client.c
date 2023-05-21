@@ -17,7 +17,7 @@ static void signal_handler(int signum)
 {
 	if (signum)
 		ft_printf("Message received!\n");
-	
+
 }
 
 static int input_invalid(int ac, char** av)
@@ -33,12 +33,11 @@ static int send_len(int server_pid, int len)
 
 	i = 0;
 	//len = INT_MAX;
-	while (i < 32)
+	while (i < 31)
 	{
 		//ft_printf("len: %i\n", len);
 		if (len & 1)
 		{
-
 			kill(server_pid, SIGUSR2);
 		}
 		else

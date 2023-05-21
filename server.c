@@ -17,6 +17,7 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 	static int	receiver = 0;
 	static int	i = 0;
 
+	ft_printf("Signal received\n");
 	if (i < 31)
 	{
 		
@@ -34,10 +35,14 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 		{
 			ft_printf("RESULT: %i\n", receiver);
 			kill(info->si_pid, SIGUSR1);
+			receiver = 0;
 		}
 		else
 			receiver = receiver >> 1;
 		i++;
+	}
+	if (i == 31) {
+		i = 0;
 	}
 	(void)context;
 	/* if (i == 32)
@@ -57,11 +62,11 @@ int	main(void)
 	sigemptyset(&action.sa_mask); // this init is required before using sigset_t
 	action.sa_flags = SA_SIGINFO; // sa_sigaction is pointed at handler function
 	action.sa_sigaction = signal_handler; // setting handler
-	
+	sigaction(SIGUSR1, &action, NULL);
+	sigaction(SIGUSR2, &action, NULL);
  	while (1)
 	{
-		sigaction(SIGUSR1, &action, NULL);
-		sigaction(SIGUSR2, &action, NULL);
+		
 		pause();
 	}
 	return (0);
