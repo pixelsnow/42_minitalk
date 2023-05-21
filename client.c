@@ -6,26 +6,20 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 18:46:23 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 22:23:50 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void signal_handler(int signum)
-{
-	if (signum)
-		ft_printf("Message received!\n");
-}
-
-static int input_invalid(int ac)
+static int	input_invalid(int ac)
 {
 	if (ac != 3)
 		return (1);
 	return (0);
 }
 
-static int send_len(pid_t server_pid, int len)
+static int	send_len(pid_t server_pid, int len)
 {
 	int	i;
 
@@ -37,13 +31,13 @@ static int send_len(pid_t server_pid, int len)
 		else
 			kill(server_pid, SIGUSR1);
 		len = len >> 1;
-		usleep(DELAY);
+		usleep(50);
 		i++;
 	}
 	return (0);
 }
 
-static int send_msg(pid_t server_pid, char *msg)
+static int	send_msg(pid_t server_pid, char *msg, int delay)
 {
 	int	i;
 	int	j;
@@ -54,7 +48,7 @@ static int send_msg(pid_t server_pid, char *msg)
 		j = 7;
 		while (j >= 0)
 		{
-			usleep(DELAY);
+			usleep(delay);
 			if (msg[i] & (1 << j))
 				kill(server_pid, SIGUSR2);
 			else
@@ -66,11 +60,12 @@ static int send_msg(pid_t server_pid, char *msg)
 	return (0);
 }
 
-int main(int ac, char** av)
+int	main(int ac, char	**av)
 {
 	pid_t	server_pid;
 	char	*message;
 	int		len;
+	int		delay;
 
 	if (input_invalid(ac))
 	{
@@ -85,9 +80,10 @@ int main(int ac, char** av)
 	}
 	message = av[2];
 	len = ft_strlen(message);
-	signal(SIGUSR1, signal_handler);
+	delay = 50;
+	if (len > 12000)
+		delay = 150;
 	send_len(server_pid, len);
-	send_msg(server_pid, message);
-	pause();
+	send_msg(server_pid, message, delay);
 	return (0);
 }
