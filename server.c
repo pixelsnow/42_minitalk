@@ -6,18 +6,29 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:18:18 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 17:29:48 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:43:00 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static int read_len(int signo, int len)
+static int read_len_bit(int signo, int len)
 {
 	len = len >> 1;
 	if (signo == SIGUSR2)
 		len = len | (1 << 30);
 	return len;
+}
+
+static char *malloc_message(int len)
+{
+	char *res;
+	
+	res = (char *)malloc((len + 1) * sizeof(char));
+	if (!res)
+		return NULL;
+	res[len] = '\0';
+	return (res);
 }
 
 static void    signal_handler(int signo, siginfo_t *info, void *context)
@@ -27,32 +38,17 @@ static void    signal_handler(int signo, siginfo_t *info, void *context)
 	static char	*res;
 
 	if (i < 31)
-	{
-		len = read_len(signo, len);
-	}
-	else if (i == 31) {
-		//ft_printf("LEN: %i\n", len);
-		res = (char *)malloc((len + 1) * sizeof(char));
+		len = read_len_bit(signo, len);
+	else if (i < 32) {
+		res = malloc_message(len);
 		if (!res)
 		{
-			ft_printf("ERROR: memory not allocated\n");
+			ft_printf("ERROR: memory allocation failed\n");
+			exit(1);
 		}
-		res[len] = '\0';
 	}
-	else if (i > 31 && i <= len * 8 + 32)
-	{
-		if (signo == SIGUSR2)
-		{
-			//ft_printf("1 to %ith bit of %ith char\n", (i - 32) % 8, (i - 32) / 8);
+	else if (i <= len * 8 + 32 && signo == SIGUSR2)
 			res[(i - 32) / 8] |= (1 << (7 - (i - 32) % 8));
-			//ft_printf("res[%i] |= %i\n", (i - 32) / 8, res[(i - 32) / 8 - 1] | (1 << (7 - (i - 32) % 8)));
-			//ft_printf("res[%i]: %i\n",(i - 32) / 8, res[(i - 32) / 8]);
-		}
-		else
-		{
-			//ft_printf("0 to %ith bit of %ith char\n", (i - 32) % 8, (i - 32) / 8);
-		}
-	}
 	i++;
 	if (i == len * 8 + 32)
 	{
