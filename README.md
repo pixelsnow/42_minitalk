@@ -1,10 +1,10 @@
 # Minitalk
 
-🚧 In progress 🚧
+✅ Passed with **125**/100
+
+My version of **get next line** School 42 project @ [Hive Helsinki](https://www.hive.fi/en/)
 
 A small data exchange (client-server) program using UNIX signals.
-
-School 42 project at [Hive Helsinki](https://www.hive.fi/en/)
 
 ## Task description
 
