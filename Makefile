@@ -6,7 +6,7 @@
 #    By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 21:58:02 by vvagapov          #+#    #+#              #
-#    Updated: 2023/05/21 22:37:49 by vvagapov         ###   ########.fr        #
+#    Updated: 2023/05/22 14:46:51 by vvagapov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ bonus: $(LIBFTPRINTF) $(CLIENT_BONUS) $(SERVER_BONUS)
 $(CLIENT_BONUS): $(OBJ_CLIENT_BONUS)
 	cc $(OBJ_CLIENT_BONUS) $(INC) $(LIBFTPRINTF) -o $(CLIENT_BONUS)
 
-$(SERVER_BONUS): $(SRC_SERVER_BONUS)
-	cc $(SRC_SERVER_BONUS) $(INC) $(LIBFTPRINTF) -o $(SERVER_BONUS)
+$(SERVER_BONUS): $(OBJ_SERVER_BONUS)
+	cc $(OBJ_SERVER_BONUS) $(INC) $(LIBFTPRINTF) -o $(SERVER_BONUS)
 
 %.o: %.c
 	cc -c $(FLAGS) $^
@@ -64,6 +64,8 @@ fclean: clean
 	make fclean -C $(LIBFTPRINTF_DIR)
 	rm -f $(NAME)
 	rm -f $(SERVERNAME)
+	rm -f $(CLIENT_BONUS)
+	rm -f $(SERVER_BONUS)
 
 re: fclean all
 

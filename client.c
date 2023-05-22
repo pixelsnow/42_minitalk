@@ -6,7 +6,7 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:56:16 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 22:23:50 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:46:19 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int ac, char	**av)
 		return (1);
 	}
 	server_pid = ft_atoi(av[1]);
-	if (kill(server_pid, 0))
+	if (server_pid == 0 || kill(server_pid, 0))
 	{
 		ft_printf("Process with this id doesn't exist\n");
 		return (1);

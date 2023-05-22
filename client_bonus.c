@@ -6,11 +6,11 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:17:42 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 22:07:24 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:46:30 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static void	signal_handler(int signum)
 {

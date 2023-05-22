@@ -6,11 +6,11 @@
 /*   By: vvagapov <vvagapov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:17:29 by vvagapov          #+#    #+#             */
-/*   Updated: 2023/05/21 22:18:35 by vvagapov         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:45:45 by vvagapov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static int	read_len_bit(int signo, int len)
 {
@@ -35,6 +35,7 @@ static char	*malloc_message(int len)
 static void	finalise(char **res, pid_t client_pid, int *len, int *i)
 {
 	ft_printf("%s\n", *res);
+	usleep(51);
 	kill(client_pid, SIGUSR1);
 	free(*res);
 	*res = NULL;
