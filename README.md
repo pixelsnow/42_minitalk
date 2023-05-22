@@ -25,3 +25,19 @@ You must create a communication program in the form of a client and a server.
 - The server acknowledges every message received by sending back a signal to the
 client.
 - Unicode characters support!
+
+## How to run
+
+- `cd` into the directory.
+- `make` to compile.
+- `./server` to run server. Server will display its' process id, copy it!
+- Client takes two arguments: server process id and a string to send like so: `./client_bonus {process_id} {your_message}`.
+Example with process id 13629: `./client 13629 "Message to send 🦕"`
+
+## How to run bonus
+
+- `cd` into the directory
+- `make bonus` to compile
+- `./server_bonus` to run server.
+- `./client_bonus {process_id} {your_message}` to send your message to server.
+- This time server will send a confirmation to the client after the message was received. Very wow!
