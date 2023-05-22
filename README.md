@@ -31,7 +31,7 @@ client.
 - `cd` into the directory.
 - `make` to compile.
 - `./server` to run server. Server will display its' process id, copy it!
-- Client takes two arguments: server process id and a string to send like so: `./client_bonus {process_id} {your_message}`.
+- Client takes two arguments: server process id and a string to send. Run it in a second terminal like so: `./client_bonus {process_id} {your_message}`.
 Example with process id 13629: `./client 13629 "Message to send 🦕"`
 
 ## How to run bonus
